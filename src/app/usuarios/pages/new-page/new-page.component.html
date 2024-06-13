@@ -1,0 +1,194 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Nuevo beneficiario</h1>
+        </div>
+
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <section class="content">
+    <!-- Default box -->
+    <div class="card">
+
+      <div class="card-body">
+        <form [formGroup]="formNuevoBeneficiario" (ngSubmit)="onValidate()" method=" post">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-4 col-md-12">
+                <label for="">Nombre</label>
+                <input type="text" class="form-control" formControlName="nombreBeneficiario" placeholder="Nombre"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['nombreBeneficiario'].invalid && (formNuevoBeneficiario.controls['nombreBeneficiario'].dirty || formNuevoBeneficiario.controls['nombreBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['nombreBeneficiario'].valid && (formNuevoBeneficiario.controls['nombreBeneficiario'].dirty || formNuevoBeneficiario.controls['nombreBeneficiario'].touched)">
+                <span *ngIf="isValiedField('nombreBeneficiario')" class="error  text-danger">Nombre
+                  requerido</span>
+              </div>
+              <div class="col-lg-4 col-md-12">
+                <label for="">Apellido paterno</label>
+                <input type="text" class="form-control" placeholder="Apellido paterno"
+                  formControlName="apellidPaternoBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['apellidPaternoBeneficiario'].invalid && (formNuevoBeneficiario.controls['apellidPaternoBeneficiario'].dirty || formNuevoBeneficiario.controls['apellidPaternoBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['apellidPaternoBeneficiario'].valid && (formNuevoBeneficiario.controls['apellidPaternoBeneficiario'].dirty || formNuevoBeneficiario.controls['apellidPaternoBeneficiario'].touched)">
+                <span *ngIf="isValiedField('apellidPaternoBeneficiario')" class="error  text-danger">Apellido paterno
+                  requerido</span>
+
+              </div>
+              <div class="col-lg-4 col-md-12">
+                <label for="">Apellido materno</label>
+                <input type="text" class="form-control" placeholder="Apellido materno"
+                  formControlName="apellidoMaternoBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['apellidoMaternoBeneficiario'].invalid && (formNuevoBeneficiario.controls['apellidoMaternoBeneficiario'].dirty || formNuevoBeneficiario.controls['apellidoMaternoBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['apellidoMaternoBeneficiario'].valid && (formNuevoBeneficiario.controls['apellidoMaternoBeneficiario'].dirty || formNuevoBeneficiario.controls['apellidoMaternoBeneficiario'].touched)">
+                <span *ngIf="isValiedField('apellidoMaternoBeneficiario')" class="error  text-danger">Apellido materno
+                  requerido</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="">CURP</label>
+                <input type="text" class="form-control" placeholder="CURP" formControlName="curpBeneficiario"
+                  (input)="convertirCurpAMayusculas()"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['curpBeneficiario'].invalid && (formNuevoBeneficiario.controls['curpBeneficiario'].dirty || formNuevoBeneficiario.controls['curpBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['curpBeneficiario'].valid && (formNuevoBeneficiario.controls['curpBeneficiario'].dirty || formNuevoBeneficiario.controls['curpBeneficiario'].touched)">
+                <span *ngIf="isValiedField('curpBeneficiario')" class="error  text-danger">CURP invalido</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-12">
+                <label for="">Municipio</label>
+                <select id="raza" class="form-control" formControlName="idMunicipioBeneficiario"
+                  (change)="obtener_localidades_por_municipio($event)"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['idMunicipioBeneficiario'].invalid && (formNuevoBeneficiario.controls['idMunicipioBeneficiario'].dirty || formNuevoBeneficiario.controls['idMunicipioBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['idMunicipioBeneficiario'].valid && (formNuevoBeneficiario.controls['idMunicipioBeneficiario'].dirty || formNuevoBeneficiario.controls['idMunicipioBeneficiario'].touched)">
+
+                  <option *ngFor="let municipio of municipios" [value]="municipio.id_municipio">{{ municipio.nombre }}
+                  </option>
+                </select>
+                <span *ngIf="isValiedField('idMunicipioBeneficiario')" class="error  text-danger">Seleccione un
+                  municipio</span>
+              </div>
+              <div class="col-lg-6 col-md-12">
+                <label for="">Localidad</label>
+                <select id="subraza" class="form-control" formControlName="idLocalidadBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['idLocalidadBeneficiario'].invalid && (formNuevoBeneficiario.controls['idLocalidadBeneficiario'].dirty || formNuevoBeneficiario.controls['idLocalidadBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['idLocalidadBeneficiario'].valid && (formNuevoBeneficiario.controls['idLocalidadBeneficiario'].dirty || formNuevoBeneficiario.controls['idLocalidadBeneficiario'].touched)">
+
+                  <option *ngFor="let localidad of localidades" [value]="localidad.id_localidad">{{
+                    localidad.localidad
+                    }}
+                  </option>
+                </select>
+                <span *ngIf="isValiedField('idLocalidadBeneficiario')" class="error  text-danger">Seleccione una
+                  localidad</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label for="">Dirección</label>
+                <input type="text" class="form-control" placeholder="Dirección" formControlName="direccionBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['direccionBeneficiario'].invalid && (formNuevoBeneficiario.controls['direccionBeneficiario'].dirty || formNuevoBeneficiario.controls['direccionBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['direccionBeneficiario'].valid && (formNuevoBeneficiario.controls['direccionBeneficiario'].dirty || formNuevoBeneficiario.controls['direccionBeneficiario'].touched)">
+                <span *ngIf="isValiedField('direccionBeneficiario')" class="error  text-danger">Dirección
+                  requerida</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-md-12">
+                <label for="s">Tipo Sangre</label>
+                <select id="raza" class="form-control" formControlName="tipoSangreBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['tipoSangreBeneficiario'].invalid && (formNuevoBeneficiario.controls['tipoSangreBeneficiario'].dirty || formNuevoBeneficiario.controls['tipoSangreBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['tipoSangreBeneficiario'].valid && (formNuevoBeneficiario.controls['tipoSangreBeneficiario'].dirty || formNuevoBeneficiario.controls['tipoSangreBeneficiario'].touched)">
+
+                  <option *ngFor="let tipoSangre of tiposSangre" [value]="tipoSangre.id_tipo_sangre">
+                    {{
+                    tipoSangre.nombre
+                    }}
+                  </option>
+                </select>
+                <span *ngIf="isValiedField('tipoSangreBeneficiario')" class="error  text-danger">Tipo de sangre
+                  requerida</span>
+              </div>
+              <div class="col-lg-4 col-md-12">
+                <label for="">Alergias</label>
+                <input type="text" class="form-control" placeholder="Alergias" formControlName="alergiasBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['alergiasBeneficiario'].invalid && (formNuevoBeneficiario.controls['alergiasBeneficiario'].dirty || formNuevoBeneficiario.controls['alergiasBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['alergiasBeneficiario'].valid && (formNuevoBeneficiario.controls['alergiasBeneficiario'].dirty || formNuevoBeneficiario.controls['alergiasBeneficiario'].touched)">
+                <span *ngIf="isValiedField('alergiasBeneficiario')" class="error  text-danger">Alergias requeridas
+                </span>
+              </div>
+              <div class="col-lg-4 col-md-12">
+                <label for="">Teléfono emergencia</label>
+                <input type="text" class="form-control" placeholder="Teléfono de emergencia"
+                  formControlName="telefonoEmergenciaBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['telefonoEmergenciaBeneficiario'].invalid && (formNuevoBeneficiario.controls['telefonoEmergenciaBeneficiario'].dirty || formNuevoBeneficiario.controls['telefonoEmergenciaBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['telefonoEmergenciaBeneficiario'].valid && (formNuevoBeneficiario.controls['telefonoEmergenciaBeneficiario'].dirty || formNuevoBeneficiario.controls['telefonoEmergenciaBeneficiario'].touched)">
+                <span *ngIf="isValiedField('telefonoEmergenciaBeneficiario')" class="error  text-danger">Teléfono
+                  requerido</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <label for="s">Tipo de discapcaidad</label>
+                <select id="raza" class="form-control" formControlName="idTipoDiscapacidadBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['tipoSangreBeneficiario'].invalid && (formNuevoBeneficiario.controls['tipoSangreBeneficiario'].dirty || formNuevoBeneficiario.controls['tipoSangreBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['tipoSangreBeneficiario'].valid && (formNuevoBeneficiario.controls['tipoSangreBeneficiario'].dirty || formNuevoBeneficiario.controls['tipoSangreBeneficiario'].touched)">
+
+                  <option *ngFor="let tipoDiscapacidad of tiposDiscapacidad"
+                    [value]="tipoDiscapacidad.id_tipo_discapacidad">
+                    {{
+                    tipoDiscapacidad.nombre_discapacidad
+                    }}
+                  </option>
+                </select>
+                <span *ngIf="isValiedField('tipoSangreBeneficiario')" class="error  text-danger">Tipo de discapacidad
+                  requerida</span>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="form-group col-12">
+                <label>Comentarios</label>
+                <textarea class="form-control" rows="3" placeholder="Comentarios"
+                  formControlName="comentariosBeneficiario"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['comentariosBeneficiario'].invalid && (formNuevoBeneficiario.controls['comentariosBeneficiario'].dirty || formNuevoBeneficiario.controls['comentariosBeneficiario'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['comentariosBeneficiario'].valid && (formNuevoBeneficiario.controls['comentariosBeneficiario'].dirty || formNuevoBeneficiario.controls['comentariosBeneficiario'].touched)">
+                <span *ngIf="isValiedField('comentariosBeneficiario')" class="error  text-danger">Comentarios reuqridos</span>
+                </textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-12">
+                <label for="customFile">Seleccionar foto</label>
+                <div class="custom-file">
+                  <input type="file" formControlName="imagenBeneficiario" class="custom-file-input" id="customFile"
+                    (change)="onFileSelected($event)">
+                  <label class="custom-file-label" for="customFile">Seleccionar foto</label>
+                </div>
+                <span *ngIf="isValiedField('imagenBeneficiario')" class="error  text-danger">Foto requerida</span>
+              </div>
+              <div class="centered-image">
+                <div *ngIf="selectedImage">
+                  <img [src]="selectedImage" alt="Imagen seleccionada" style="width: 200px; height: 300px;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary float-right"
+              [disabled]="isSubmitting || !formNuevoBeneficiario.valid">Guardar</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="isLoading" class="overlay">
+        <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+      </div>
+    </div>
+  </section>
+</div>

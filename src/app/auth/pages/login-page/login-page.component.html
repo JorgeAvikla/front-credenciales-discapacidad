@@ -1,0 +1,47 @@
+<div class="login-page">
+  <div class="login-box">
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+      <div class="card-header text-center">
+        <a href="../../index2.html" class="h1"><b>SEDIF </b>Tlaxcala</a>
+      </div>
+      <div class="card-body">
+        <h5 class="login-box-msg">Sistema de credencialización</h5>
+
+        <form [formGroup]="myform" (ngSubmit)="onValidate()" method=" post">
+          <label for="">Usuario</label>
+
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Usuario" formControlName="usuario">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <label for="">Contraseña</label>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Contraseña" formControlName="password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block" [disabled]="myform.invalid">Iniciar
+                sesión</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</div>

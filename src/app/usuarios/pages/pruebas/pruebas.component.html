@@ -1,0 +1,41 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Beneficiarios</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item active">Benficiarios</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <section class="content">
+    <!-- Default box -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Lista de beneficiarios</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="miFormulario" (ngSubmit)="enviarFormulario()">
+          <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" formControlName="nombre">
+          </div>
+
+          <div>
+            <label for="imagen">Imagen (JPG o PNG):</label>
+            <input type="file" id="imagen" (change)="onSeleccionarImagen($event)" accept=".jpg,.png">
+          </div>
+
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+</div>
