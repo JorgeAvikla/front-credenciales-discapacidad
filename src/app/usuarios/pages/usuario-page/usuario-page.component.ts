@@ -49,7 +49,6 @@ export class UsuarioPageComponent implements OnInit {
     telefonoEmergenciaBeneficiario: ['', [Validators.required]],
     comentariosBeneficiario: ['', [Validators.required]],
     idTipoDiscapacidadBeneficiario: ['', [Validators.required]],
-
   })
 
   public formActualizarFotografiaBeneficiario: FormGroup = this.fb.group({
@@ -57,12 +56,14 @@ export class UsuarioPageComponent implements OnInit {
   })
 
   public formActualizarCurpBeneficiario: FormGroup = this.fb.group({
-
     curpBeneficiarioEditar: ['', [Validators.required, Validators.pattern(this.validatorsService.curpPattern)],
       [new ValidatorEditCurpService(this.activatedRoute.snapshot.paramMap.get('id'))]],
   })
 
-
+  public formActualizarDatosContacto: FormGroup = this.fb.group({
+    nombreContactoBeneficiarioEditar: ['', [Validators.required]],
+    telefonoContactoBeneficiarioEditar: ['', [Validators.required]],
+  })
 
 
   isValiedField(campo: string): boolean | null {
@@ -74,6 +75,10 @@ export class UsuarioPageComponent implements OnInit {
 
   isValiedCurp(campo: string): boolean | null {
     return this.validatorsService.isValiedField(this.formActualizarCurpBeneficiario, campo)
+  }
+
+  isValiedContacto(campo: string): boolean | null {
+    return this.validatorsService.isValiedField(this.formActualizarDatosContacto, campo)
   }
 
   onValidate() {
@@ -169,9 +174,14 @@ export class UsuarioPageComponent implements OnInit {
               const dataCurp = {
                 curpBeneficiarioEditar: dataUsuario.datos_beneficiario.curp,
               };
-
               this.formActualizarCurpBeneficiario.patchValue(dataCurp);
 
+              const dataContacto = {
+                nombreContactoBeneficiarioEditar: dataUsuario.datos_beneficiario.nombre_contacto_emergencia,
+                telefonoContactoBeneficiarioEditar: dataUsuario.datos_beneficiario.telefono_contacto_emergencia,
+              };
+              console.log(dataContacto);
+              this.formActualizarDatosContacto.patchValue(dataContacto);
 
 
             } else {
@@ -310,8 +320,6 @@ export class UsuarioPageComponent implements OnInit {
     else {
       this.isSubmitting = true; // Deshabilita el botón al iniciar el envío
       const curp = this.formActualizarCurpBeneficiario.value.curpBeneficiarioEditar;
-
-
       this.actualizarBeneneficiarioService.actualizarCurpBeneficiario(curp, this.idBeneficiarioActual)
         .subscribe({
           next: (respuesta) => {
@@ -339,4 +347,44 @@ export class UsuarioPageComponent implements OnInit {
     }
   }
 
+  onActualizarDatosContacto() {
+    if (this.formActualizarDatosContacto.invalid) {
+      this.formActualizarDatosContacto.markAllAsTouched();
+      return;
+    }
+    else {
+      this.isSubmitting = true; // Deshabilita el botón al iniciar el envío
+      this.isSubmitting = true; // Deshabilita el botón al iniciar el envío
+      const datosContactoBeneficiario = {
+        'nombre_contacto_emergencia': this.formActualizarDatosContacto.value.nombreContactoBeneficiarioEditar,
+        'telefono_contacto_emergencia': this.formActualizarDatosContacto.value.telefonoContactoBeneficiarioEditar,
+      };
+
+      this.actualizarBeneneficiarioService.actualizarDatosContactoBeneficiario(datosContactoBeneficiario, this.idBeneficiarioActual)
+        .subscribe({
+          next: (respuesta) => {
+            if (respuesta.error != true) {
+              this.beneficiario = respuesta.data;
+              Swal.fire({
+                title: "Correcto",
+                text: "Se actualizó el usuario correctamente",
+                icon: "success"
+              }).then(() => {
+                this.isSubmitting = false; // Habilita el botón después del envío
+              });
+            }
+            else {
+              this.isSubmitting = false; // Habilita el botón si hay un error
+              this.isLoading = false;
+              Swal.fire('Error', 'Error al actualizar verifique sus datos' || 'Error desconocido', 'error');
+            }
+          },
+          error: (message) => {
+            Swal.fire('Error', message.error, 'error');
+            this.isSubmitting = false; // Habilita el botón si hay un error
+          }
+        });
+
+    }
+  }
 }

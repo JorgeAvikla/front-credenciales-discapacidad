@@ -72,6 +72,8 @@
                 <li class="nav-item"><a class="nav-link" href="#actualizar_fotografia" data-toggle="tab">Fotografía</a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="#actualizar_curp" data-toggle="tab">CURP</a></li>
+                <li class="nav-item"><a class="nav-link" href="#datos_contacto" data-toggle="tab">Datos contacto</a>
+                </li>
               </ul>
             </div>
             <div class="card-body">
@@ -267,7 +269,6 @@
                     </div>
                   </form>
                 </div>
-
                 <div class="tab-pane" id="actualizar_curp">
                   <form [formGroup]="formActualizarCurpBeneficiario" (ngSubmit)="onActualizarCurp()">
                     <div class="card-body">
@@ -288,6 +289,41 @@
                         [disabled]="isSubmitting || !formActualizarCurpBeneficiario.valid">Guardar</button>
                     </div>
                   </form>
+                </div>
+
+                <div class="tab-pane" id="datos_contacto">
+                  <form [formGroup]="formActualizarDatosContacto" (ngSubmit)="onActualizarDatosContacto()">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-12">
+                          <label for="">Nombre Contacto</label>
+                          <input type="text" class="form-control" placeholder="Nombre Contacto"
+                            formControlName="nombreContactoBeneficiarioEditar"
+                            [class.is-invalid]="formActualizarDatosContacto.controls['nombreContactoBeneficiarioEditar'].invalid && (formActualizarDatosContacto.controls['nombreContactoBeneficiarioEditar'].dirty || formActualizarDatosContacto.controls['nombreContactoBeneficiarioEditar'].touched)"
+                            [class.is-valid]="formActualizarDatosContacto.controls['nombreContactoBeneficiarioEditar'].valid && (formActualizarDatosContacto.controls['nombreContactoBeneficiarioEditar'].dirty || formActualizarDatosContacto.controls['nombreContactoBeneficiarioEditar'].touched)">
+                          <span *ngIf="isValiedContacto('nombreContactoBeneficiarioEditar')"
+                            class="error  text-danger">Nombre
+                            invalido</span>
+                        </div>
+
+                        <div class="col-12">
+                          <label for="">Telefono de contacto</label>
+                          <input type="text" class="form-control" placeholder="Telefono de contacto"
+                            formControlName="telefonoContactoBeneficiarioEditar"
+                            [class.is-invalid]="formActualizarDatosContacto.controls['telefonoContactoBeneficiarioEditar'].invalid && (formActualizarDatosContacto.controls['telefonoContactoBeneficiarioEditar'].dirty || formActualizarDatosContacto.controls['telefonoContactoBeneficiarioEditar'].touched)"
+                            [class.is-valid]="formActualizarDatosContacto.controls['telefonoContactoBeneficiarioEditar'].valid && (formActualizarDatosContacto.controls['telefonoContactoBeneficiarioEditar'].dirty || formActualizarDatosContacto.controls['telefonoContactoBeneficiarioEditar'].touched)">
+                          <span *ngIf="isValiedContacto('telefonoContactoBeneficiarioEditar')"
+                            class="error  text-danger">Telefono
+                            invalido</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-primary float-right"
+                        [disabled]="isSubmitting || !formActualizarDatosContacto.valid">Guardar</button>
+                    </div>
+                  </form>
+
                 </div>
 
               </div>

@@ -66,10 +66,11 @@ export class ActualizarBeneneficiarioService {
 
   }
 
-  actualizarCurpBeneficiario(curp: any, idBeneficiario: string): Observable<boolean | any> {
+  actualizarCurpBeneficiario(beneficiario: any, idBeneficiario: string): Observable<boolean | any> {
     const url = `${this.baseUrl}/beneficiarios/actualizar_curp`
     const body = {
-      'curp': curp,
+      'nombre_contacto_emergencia': beneficiario.nombre_contacto_emergencia,
+      'telefono_contacto_emergencia': beneficiario.telefono_contacto_emergencia,
       'id_beneficiario': idBeneficiario,
     };
     const token = localStorage.getItem('token');
@@ -85,8 +86,31 @@ export class ActualizarBeneneficiarioService {
           return resp
         })
       )
-
   }
+
+  actualizarDatosContactoBeneficiario(datosContacto: any, idBeneficiario: string): Observable<boolean | any> {
+    const url = `${this.baseUrl}/beneficiarios/actualizar_datos_contacto`
+    const body = {
+      'nombre_contacto': datosContacto,
+      'telefono_contacto': datosContacto,
+      'id_beneficiario': idBeneficiario,
+    };
+    console.log(body);
+    const token = localStorage.getItem('token');
+    if (!token) return of({ estatus: true });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': token,
+    });
+    return this.http.put(url, body, { headers })
+      .pipe(
+        map(resp => {
+          return resp
+        })
+      )
+  }
+
   constructor() { }
 
 }

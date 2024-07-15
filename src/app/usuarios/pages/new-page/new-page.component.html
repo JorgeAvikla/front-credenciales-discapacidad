@@ -148,8 +148,6 @@
                   requerida</span>
               </div>
             </div>
-
-
             <div class="row">
               <div class="form-group col-12">
                 <label>Comentarios</label>
@@ -157,8 +155,8 @@
                   formControlName="comentariosBeneficiario"
                   [class.is-invalid]="formNuevoBeneficiario.controls['comentariosBeneficiario'].invalid && (formNuevoBeneficiario.controls['comentariosBeneficiario'].dirty || formNuevoBeneficiario.controls['comentariosBeneficiario'].touched)"
                   [class.is-valid]="formNuevoBeneficiario.controls['comentariosBeneficiario'].valid && (formNuevoBeneficiario.controls['comentariosBeneficiario'].dirty || formNuevoBeneficiario.controls['comentariosBeneficiario'].touched)">
-                <span *ngIf="isValiedField('comentariosBeneficiario')" class="error  text-danger">Comentarios reuqridos</span>
-                </textarea>
+                            <span *ngIf="isValiedField('comentariosBeneficiario')" class="error  text-danger">Comentarios reuqridos</span>
+                            </textarea>
               </div>
             </div>
             <div class="row">
@@ -175,6 +173,26 @@
                 <div *ngIf="selectedImage">
                   <img [src]="selectedImage" alt="Imagen seleccionada" style="width: 200px; height: 300px;">
                 </div>
+              </div>
+            </div>
+            <hr>
+            <h3>Contacto de emergencia</h3>
+            <div class="row">
+              <div class="col-lg-6 col-md-12">
+                <label for="">Nombre completo</label>
+                <input type="text" class="form-control" formControlName="nombreEmergencia" placeholder="Nombre"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['nombreEmergencia'].invalid && (formNuevoBeneficiario.controls['nombreEmergencia'].dirty || formNuevoBeneficiario.controls['nombreEmergencia'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['nombreEmergencia'].valid && (formNuevoBeneficiario.controls['nombreEmergencia'].dirty || formNuevoBeneficiario.controls['nombreEmergencia'].touched)">
+                <span *ngIf="isValiedField('nombreEmergencia')" class="error  text-danger">Nombre
+                  requerido</span>
+              </div>
+              <div class="col-lg-6 col-md-12">
+                <label for="">Teléfono contacto</label>
+                <input type="text" class="form-control" placeholder="Apellido paterno"
+                  formControlName="numeroEmergencia"
+                  [class.is-invalid]="formNuevoBeneficiario.controls['numeroEmergencia'].invalid && (formNuevoBeneficiario.controls['numeroEmergencia'].dirty || formNuevoBeneficiario.controls['numeroEmergencia'].touched)"
+                  [class.is-valid]="formNuevoBeneficiario.controls['numeroEmergencia'].valid && (formNuevoBeneficiario.controls['numeroEmergencia'].dirty || formNuevoBeneficiario.controls['numeroEmergencia'].touched)">
+                <span *ngIf="isValiedField('numeroEmergencia')" class="error  text-danger">Número requerido</span>
               </div>
             </div>
           </div>

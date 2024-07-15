@@ -27,6 +27,9 @@ export class GuardarBeneficiarioService {
     formulario.append('comentarios', beneficiario.get('comentariosBeneficiario')?.value);
     formulario.append('id_discapacidad', beneficiario.get('idTipoDiscapacidadBeneficiario')?.value);
     formulario.append('imagen_beneficiario', imagen);
+    formulario.append('nombre_contacto_emergencia', beneficiario.get('nombreEmergencia')?.value);
+    formulario.append('telefono_contacto_emergencia', beneficiario.get('numeroEmergencia')?.value);
+
     const body = formulario;
     const token = localStorage.getItem('token');
     if (!token) return of({ estatus: true });

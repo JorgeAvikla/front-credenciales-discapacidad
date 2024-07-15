@@ -47,6 +47,8 @@ export class NewPageComponent {
     comentariosBeneficiario: ['', [Validators.required]],
     idTipoDiscapacidadBeneficiario: ['', [Validators.required]],
     imagenBeneficiario: ['', [Validators.required]],
+    nombreEmergencia: ['', [Validators.required]],
+    numeroEmergencia: ['', [Validators.required]],
 
   })
 
